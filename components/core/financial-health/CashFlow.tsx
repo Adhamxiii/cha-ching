@@ -31,8 +31,7 @@ export default function CashFlow() {
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: "area",
-      stacked: true,
-      height: 300,
+      height: "auto",
       toolbar: {
         show: false,
       },
@@ -46,32 +45,17 @@ export default function CashFlow() {
     },
     xaxis: {
       categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      labels: {
+        show: true,
+      },
     },
     yaxis: {
       title: {
         text: "Amount",
       },
-    },
-    tooltip: {
-      x: {
-        format: "dd/MM/yy HH:mm",
+      labels: {
+        show: true,
       },
-    },
-    colors: ["#8884d8", "#82ca9d", "#ffc658"],
-    fill: {
-      type: "gradient",
-      gradient: {
-        opacityFrom: 0.6,
-        opacityTo: 0.8,
-      },
-    },
-    legend: {
-      position: "top",
-      horizontalAlign: "left",
-    },
-    grid: {
-      borderColor: "#7e7e7",
-      strokeDashArray: 3,
     },
   };
 
