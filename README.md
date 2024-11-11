@@ -74,7 +74,7 @@ Contributions are welcome! Please follow these steps to contribute:
 
 ## Live Demo
 
-You can access the live version of Wheel Master Academy [here](https://cha-ching-kappa.vercel.app/).
+You can access the live version of cha-ching [here](https://cha-ching-kappa.vercel.app/).
 
 ### Contact Me
 
