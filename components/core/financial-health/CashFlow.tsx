@@ -1,40 +1,91 @@
 "use client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-const CashFlow = () => {
-    const cashFlowData = [
-        { name: 'Jan', Income: 4000, Expenses: 2400, Savings: 2400 },
-        { name: 'Feb', Income: 3000, Expenses: 1398, Savings: 2210 },
-        { name: 'Mar', Income: 2000, Expenses: 9800, Savings: 2290 },
-        { name: 'Apr', Income: 2780, Expenses: 3908, Savings: 2000 },
-        { name: 'May', Income: 1890, Expenses: 4800, Savings: 2181 },
-        { name: 'Jun', Income: 2390, Expenses: 3800, Savings: 2500 },
-        { name: 'Jul', Income: 3490, Expenses: 4300, Savings: 2100 },
-    ]
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Cash Flow Stream</CardTitle>
-                <CardDescription>
-                    Visualizing income, expenses, and savings over time.
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart width={1170} height={300} data={cashFlowData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Area type="monotone" dataKey="Income" stackId="1" stroke="#8884d8" fill="#8884d8" />
-                        <Area type="monotone" dataKey="Expenses" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-                        <Area type="monotone" dataKey="Savings" stackId="1" stroke="#ffc658" fill="#ffc658" />
-                    </AreaChart>
-                </ResponsiveContainer>
-            </CardContent>
-        </Card>
-    );
-};
+import { useState } from "react";
+import dynamic from "next/dynamic";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-export default CashFlow;    
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+export default function CashFlow() {
+  const [series] = useState([
+    {
+      name: "Income",
+      data: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
+    },
+    {
+      name: "Expenses",
+      data: [2400, 1398, 9800, 3908, 4800, 3800, 4300],
+    },
+    {
+      name: "Savings",
+      data: [2400, 2210, 2290, 2000, 2181, 2500, 2100],
+    },
+  ]);
+
+  const options: ApexCharts.ApexOptions = {
+    chart: {
+      type: "area",
+      stacked: true,
+      height: 300,
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 2,
+    },
+    xaxis: {
+      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    },
+    yaxis: {
+      title: {
+        text: "Amount",
+      },
+    },
+    tooltip: {
+      x: {
+        format: "dd/MM/yy HH:mm",
+      },
+    },
+    colors: ["#8884d8", "#82ca9d", "#ffc658"],
+    fill: {
+      type: "gradient",
+      gradient: {
+        opacityFrom: 0.6,
+        opacityTo: 0.8,
+      },
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "left",
+    },
+    grid: {
+      borderColor: "#7e7e7",
+      strokeDashArray: 3,
+    },
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Cash Flow Stream</CardTitle>
+        <CardDescription>
+          Visualizing income, expenses, and savings over time.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="h-[300px] max-md:h-auto">
+        <Chart options={options} series={series} type="area" height={300} />
+      </CardContent>
+    </Card>
+  );
+}

@@ -1,8 +1,16 @@
-import dynamic from 'next/dynamic';
-const CashFlow = dynamic(() => import("@/components/core/financial-health/CashFlow"));
-const FinancialHealthRadar = dynamic(() => import("@/components/core/financial-health/FinancialHealthRadar"));
-const OverviewCards = dynamic(() => import("@/components/core/financial-health/OverviewCards"));
-const TreeMap = dynamic(() => import("@/components/core/financial-health/TreeMap"));
+import dynamic from "next/dynamic";
+const CashFlow = dynamic(
+  () => import("@/components/core/financial-health/CashFlow")
+);
+const FinancialHealthRadar = dynamic(
+  () => import("@/components/core/financial-health/FinancialHealthRadar")
+);
+const OverviewCards = dynamic(
+  () => import("@/components/core/financial-health/OverviewCards")
+);
+const TreeMap = dynamic(
+  () => import("@/components/core/financial-health/TreeMap")
+);
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
